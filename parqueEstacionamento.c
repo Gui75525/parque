@@ -73,7 +73,7 @@ void cmdSaidaCarro(parque p,char * linha){
     char mat[MAXL];
     int hora, minuto;
     float aPagar;
-
+	
     if((sscanf(linha, "%c %s %d:%d", &c, mat, &hora, &minuto)) != 4)
         printf("Dados invalidos.\n");
     else{
@@ -90,12 +90,11 @@ void cmdSaidaCarro(parque p,char * linha){
 void cmdListaCarros(parque p){
 	int i = 1;
 	int cont = daLotacaoParque(p);
-	ticket t;
 	if (cont == 0)
 		printf("Parque sem carros.\n");
 	for (; i <=cont; i++){
 
-		//completar listar matriculas
+		printf("Matricula: %s", p->ticket[i]->matricula);
 
 	}
 }

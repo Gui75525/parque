@@ -32,11 +32,7 @@ void destroiParqueETickets(parque meuParque){
 }
 
 
-void entradaCarroParque(parque p, char * matricula, int hora, int minuto){
-    if (p->numTickets == p->capacidade)
-        incCapacidadeParque(p);
-    p->ticket[p->numTickets++] = criaTicket(matricula, hora, minuto);
-}
+
 
 void incCapacidadeParque(parque p){
     int i = 0;
@@ -57,4 +53,59 @@ float daCaixaParque(parque p){
 
 int daLotacaoParque(parque p){
     return p->numTickets;
+}
+
+
+int existeParque(parque p,char * mat){
+    
+    for (int i = 0; i < p->numTickets; i++)
+    {
+        if(strcmp(p->ticket[i]->matricula, mat) == 0){
+            return 1;
+        }
+        
+    }
+    return 0;
+    
+}
+
+int entradaCarroParque(parque p,char * mat,int h,int m){
+
+    
+    for(int i = 0; i < p->numTickets; i++){
+
+        if (strcmp(p->ticket[i]->matricula, mat) == 0)
+        {
+            return 0;
+        }
+    }
+    ticket t = criaTicket(mat, h, m);
+
+        p->ticket[p->numTickets] = t;
+
+        p->numTickets = p->numTickets + 1;
+        
+        return 1;
+}
+
+
+float removeTicketParque(parque p,char * mat,int hora,int minuto){
+
+    int he, me;
+
+    for (int i = 0; i < p->numTickets; i++)
+    {
+        if(strcmp(p->ticket[i]->matricula, mat) == 0){
+
+            he = p->ticket[i]->h_entrada;
+            me = p->ticket[i]->m_entrada;
+
+            destroiTicket(p->ticket[i]);
+            p->numTickets = p->numTickets - 1;
+
+            
+
+        }
+    }
+    
 }

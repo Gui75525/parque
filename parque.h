@@ -26,6 +26,11 @@ int daLotacaoParque(parque p);
 
 float daCaixaParque(parque p);
 
+int existeParque(parque p,char * mat);
+
+int entradaCarroParque(parque p,char * mat,int h,int m);
+
+float removeTicketParque(parque p,char * mat,int hora,int minuto);
 
 
 
