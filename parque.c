@@ -5,7 +5,7 @@
 #include "parque.h"
 
 
-#define MAXL 25
+#define MAXL 150
 
 
 parque criaParque(){
@@ -61,7 +61,7 @@ int existeParque(parque p,char * mat){
     for (int i = 0; i < p->numTickets; i++)
     {
         if(strcmp(p->ticket[i]->matricula, mat) == 0){
-            return 1;
+            return i;
         }
         
     }
@@ -89,23 +89,59 @@ int entradaCarroParque(parque p,char * mat,int h,int m){
 }
 
 
-float removeTicketParque(parque p,char * mat,int hora,int minuto){
 
-    int he, me;
 
-    for (int i = 0; i < p->numTickets; i++)
+
+float removeTicketParque(parque p, char *matricula, int hora, int minuto){
+    
+    float valor;
+    int me, he;
+    int horafinal, minutofinal;
+    int posicao = existeParque(p, matricula);
+
+    he = p->ticket[posicao]->h_entrada; 
+    me = p->ticket[posicao]->m_entrada; 
+
+
+    horafinal = hora - he;
+    minutofinal = minuto - me;
+
+    if(minutofinal > 0){
+        horafinal = horafinal + 1;
+    }
+
+    if(horafinal == 1){
+        valor = 1.5;
+    }
+
+    if (horafinal == 2)
     {
-        if(strcmp(p->ticket[i]->matricula, mat) == 0){
+        valor = 2.5;
+    }
 
-            he = p->ticket[i]->h_entrada;
-            me = p->ticket[i]->m_entrada;
+    if (horafinal == 3)
+    {
+        valor = 3.5;
+    }
 
-            destroiTicket(p->ticket[i]);
-            p->numTickets = p->numTickets - 1;
-
-            
-
-        }
+    if (horafinal > 3)
+    {
+        valor = 3.5 + (horafinal - 3) * 0.75;
     }
     
+    
+
+    p->caixa += valor;
+
+    destroiTicket(p->ticket[posicao]);
+
+    for(int i=posicao; i<p->numTickets; i++){
+        p->ticket[i] = p->ticket[i+1];
+    }
+    p->numTickets--;
+    return valor;
 }
+
+
+
+

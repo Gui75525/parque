@@ -77,7 +77,7 @@ void cmdSaidaCarro(parque p,char * linha){
     if((sscanf(linha, "%c %s %d:%d", &c, mat, &hora, &minuto)) != 4)
         printf("Dados invalidos.\n");
     else{
-        if(existeParque(p, mat)==0)
+        if(existeParque(p, mat)!=0)
             printf("Carro nao existe no parque.\n");
         else{
             aPagar = removeTicketParque(p, mat, hora, minuto);
@@ -88,17 +88,17 @@ void cmdSaidaCarro(parque p,char * linha){
 }
 
 void cmdListaCarros(parque p){
-	int i = 1;
+
 	int cont = daLotacaoParque(p);
 	if (cont == 0)
 		printf("Parque sem carros.\n");
-	for (; i <=cont; i++){
+	else
+	for (int i = 0; i <=p->numTickets; i++){
 
-		printf("Matricula: %s", p->ticket[i]->matricula);
+		printf("Matricula: %s\n", p->ticket[i]->matricula);
 
 	}
 }
-
 
 
 
