@@ -7,7 +7,7 @@
 #include "ticket.h"
 #include "parque.h"
 
-#define MAXL 25
+#define MAXL 150
 /* protótipos das funções usadas no main */
 
 void interpretador(parque t);
@@ -77,7 +77,7 @@ void cmdSaidaCarro(parque p,char * linha){
     if((sscanf(linha, "%c %s %d:%d", &c, mat, &hora, &minuto)) != 4)
         printf("Dados invalidos.\n");
     else{
-        if(existeParque(p, mat)!=0)
+        if(existeParque(p, mat)==-1)
             printf("Carro nao existe no parque.\n");
         else{
             aPagar = removeTicketParque(p, mat, hora, minuto);
@@ -93,7 +93,7 @@ void cmdListaCarros(parque p){
 	if (cont == 0)
 		printf("Parque sem carros.\n");
 	else
-	for (int i = 0; i <=p->numTickets; i++){
+	for (int i = 0; i <p->numTickets; i++){
 
 		printf("Matricula: %s\n", p->ticket[i]->matricula);
 

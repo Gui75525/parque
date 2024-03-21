@@ -65,7 +65,7 @@ int existeParque(parque p,char * mat){
         }
         
     }
-    return 0;
+    return -1;
     
 }
 
